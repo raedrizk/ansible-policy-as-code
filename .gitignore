@@ -1,0 +1,5 @@
+.ansible/*
+ansible.cfg
+ansible-navigator.log
+ansible-navigator.yml
+*inventory*

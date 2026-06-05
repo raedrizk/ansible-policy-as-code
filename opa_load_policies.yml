@@ -1,0 +1,20 @@
+---
+- name: Load OPA Policies
+  hosts: localhost
+  gather_facts: false
+  tasks:
+  - name: Load each policy into OPA
+    uri:
+      url: "{{ opa_server_url }}:{{ opa_server_port | default('8181') }}/v1/policies/aap/maintenance_window"
+      method: PUT
+      body: "{{ lookup('file', './policies/maintenance_window.rego') }}"
+      body_format: raw
+      status_code: [200, 201]
+
+  - name: Load each policy into OPA
+    uri:
+      url: "{{ opa_server_url }}:{{ opa_server_port | default('8181') }}/v1/policies/aap/allowed_false"
+      method: PUT
+      body: "{{ lookup('file', './policies/allowed_false.rego') }}"
+      body_format: raw
+      status_code: [200, 201]

@@ -1,0 +1,26 @@
+---
+- name: Pull and run OPA container
+  hosts: opa
+  tasks:
+    - name: install ansible-core and podman
+      ansible.builtin.dnf:
+        name:
+          - ansible-core
+          - podman
+        state: present
+      become: yes
+
+    - name: Pull OPA container image
+      containers.podman.podman_image:
+        name: docker.io/openpolicyagent/opa
+        tag: latest
+        state: present
+
+    - name: Run OPA container in server mode
+      containers.podman.podman_container:
+        name: opa
+        image: docker.io/openpolicyagent/opa:latest
+        state: started
+        ports:
+          - "8181:8181"
+        command: "run --server --addr :8181"
