@@ -40,6 +40,10 @@ all_violations contains violation if {
     some violation in data.aap.critical_prod_weekend_only.violations
 }
 
+all_violations contains violation if {
+    some violation in data.aap.github_only_repos.violations
+}
+
 # Deny if any policy fails
 foxhound_master_policy := {
     "allowed": false,
